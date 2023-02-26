@@ -6,7 +6,11 @@ import java.util.Set;
 
 @Entity
 @Table(name = "posts")
-public class Post extends BaseEntity{
+public class Post {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @Column(nullable = false)
     private String content;

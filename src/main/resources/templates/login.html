@@ -1,6 +1,11 @@
 <main class="main">
-  <a class="button-twitter" href="https://twitter.com/" target="_blank"></a>
-  <form class="login">
+  <a class="button-twitter" href="http://localhost:8080/" target="_blank"></a>
+  <form
+          th:action="@{/login}"
+          th:method="POST"
+          th:object="${loginDTO}"
+          class="login">
+    <link rel="stylesheet" href="/loginPage.css" />
     <svg class="login-sides">
       <line class="top-right first" x1="50%" x2="100%" y1="0" y2="0"/>
       <line class="top-left first" x1="50%" x2="0" y1="0" y2="0"/>
@@ -11,7 +16,7 @@
 	</svg>
     <fieldset class="login-fieldset">
       <input type="text" placeholder="Username" class="login-fieldset-field"> <!-- to fix login in controller -->
-      <input type="password" placeholder="******" class="login-fieldset-field"> <!-- to fix login in controller -->
+      <input type="password" placeholder="*****" class="login-fieldset-field"> <!-- to fix login in controller -->
       <button type="submit" class="login-fieldset-submit">
         Login
       </button>
