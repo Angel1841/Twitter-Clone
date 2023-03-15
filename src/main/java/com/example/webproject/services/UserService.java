@@ -1,7 +1,7 @@
 package com.example.webproject.services;
 
 import com.example.webproject.model.DTOS.UserRegistrationDTO;
-import com.example.webproject.model.entities.User;
+import com.example.webproject.model.entities.UserEntity;
 import com.example.webproject.repository.UserRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -31,7 +31,7 @@ public class UserService {
     public void registerUser(UserRegistrationDTO registrationDTO,
                              Consumer<Authentication> successfulLoginProcessor) {
 
-        User userEntity = new User().
+        UserEntity userEntity = new UserEntity().
                 setUsername(registrationDTO.getUsername())
                         .setEmail(registrationDTO.getEmail())
                                 .setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
@@ -48,5 +48,7 @@ public class UserService {
 
         successfulLoginProcessor.accept(authentication);
     }
+
+
 
 }

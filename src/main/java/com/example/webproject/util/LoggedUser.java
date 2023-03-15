@@ -1,6 +1,6 @@
 package com.example.webproject.util;
 
-import com.example.webproject.model.entities.User;
+import com.example.webproject.model.entities.UserEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 
@@ -13,9 +13,9 @@ public class LoggedUser {
     public LoggedUser() {
     }
 
-    public void login(User user){
-        this.id = user.getId();
-        this.username = user.getUsername();
+    public void login(UserEntity userEntity){
+        this.id = userEntity.getId();
+        this.username = userEntity.getUsername();
     }
 
     public void logout(){
