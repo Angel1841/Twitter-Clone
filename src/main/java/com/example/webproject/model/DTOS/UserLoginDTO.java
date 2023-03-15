@@ -1,4 +1,4 @@
-package com.example.webproject.entity.DTOS;
+package com.example.webproject.model.DTOS;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

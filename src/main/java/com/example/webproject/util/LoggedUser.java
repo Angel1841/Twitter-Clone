@@ -1,6 +1,6 @@
 package com.example.webproject.util;
 
-import com.example.webproject.entity.User;
+import com.example.webproject.model.entities.User;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 

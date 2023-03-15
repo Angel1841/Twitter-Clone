@@ -1,7 +1,7 @@
 package com.example.webproject.controller;
 
-import com.example.webproject.entity.DTOS.UserLoginDTO;
-import com.example.webproject.entity.DTOS.UserRegistrationDTO;
+import com.example.webproject.model.DTOS.UserLoginDTO;
+import com.example.webproject.model.DTOS.UserRegistrationDTO;
 import com.example.webproject.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,16 +18,16 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @ModelAttribute("registrationDTO")
-    public UserRegistrationDTO initRegistrationDTO(){
-        return new UserRegistrationDTO();
-    }
+    //@ModelAttribute("registrationDTO")
+    //public UserRegistrationDTO initRegistrationDTO(){
+    //    return new UserRegistrationDTO();
+    //}
 
 
-    @ModelAttribute("loginDTO")
-    public UserLoginDTO initLoginDTO(){
-        return new UserLoginDTO();
-    }
+    //@ModelAttribute("loginDTO")
+    //public UserLoginDTO initLoginDTO(){
+    //    return new UserLoginDTO();
+    //}
 
     @GetMapping("/register")
     public String register(){
