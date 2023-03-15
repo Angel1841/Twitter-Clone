@@ -14,8 +14,14 @@
       <line class="bottom-right third" x1="100%" x2="50%" y1="100%" y2="100%"/>
 	</svg>
     <fieldset class="login-fieldset">
-      <input type="text" placeholder="Username" class="login-fieldset-field"> <!-- to fix login in controller -->
-      <input type="password" placeholder="*****" class="login-fieldset-field"> <!-- to fix login in controller -->
+      <input
+              id = "username"
+              name="username"
+              type="text" min="2" max="50"
+             placeholder="Username" class="login-fieldset-field"> <!-- to fix login in controller -->
+      <input type="password"
+             min="2" max="50"
+             placeholder="*****" class="login-fieldset-field"> <!-- to fix login in controller -->
       <button type="submit" class="login-fieldset-submit">
         Login
       </button>
