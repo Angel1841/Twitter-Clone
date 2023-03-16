@@ -30,7 +30,7 @@ public class SecurityConfiguration {
                 // allow access to all static files (images, CSS, js)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers("/", "/login", "/register", "/login-error").permitAll().
+                        requestMatchers("/", "/home", "/login", "/register", "/login-error").permitAll().
                 // only for admins
                         requestMatchers("/pages/admins").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().
@@ -42,7 +42,7 @@ public class SecurityConfiguration {
                         usernameParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY).
                 passwordParameter(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_PASSWORD_KEY).
                 // where do we go after login
-                        defaultSuccessUrl("/", true).//use true argument if you always want to go there, otherwise go to previous page
+                        defaultSuccessUrl("/home", true).//use true argument if you always want to go there, otherwise go to previous page
                 failureForwardUrl("/users/login-error").
                 and().logout().//configure logout
                 logoutUrl("/logout").

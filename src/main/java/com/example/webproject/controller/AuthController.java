@@ -71,7 +71,7 @@ public class AuthController {
             securityContextRepository.saveContext(context, request, response);
         });
 
-        return "redirect:/";
+        return "redirect:/home";
     }
 
 
