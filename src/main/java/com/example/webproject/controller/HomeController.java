@@ -10,7 +10,7 @@ public class HomeController {
     @GetMapping("/")
     public String loggedInIndex(Model model){
         // if not logged in redirect to index page
-        return "home";
+        return "index";
     }
 
 }

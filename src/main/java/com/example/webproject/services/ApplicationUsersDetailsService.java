@@ -3,6 +3,7 @@ package com.example.webproject.services;
 import com.example.webproject.model.entities.UserEntity;
 import com.example.webproject.model.entities.UserRoleEntity;
 import com.example.webproject.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -22,6 +23,7 @@ public class ApplicationUsersDetailsService implements UserDetailsService {
     }
 
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return
                 userRepository.

@@ -1,6 +1,9 @@
 package com.example.webproject.config;
 
 import com.example.webproject.model.enums.UserRoleEnum;
+import com.example.webproject.repository.UserRepository;
+import com.example.webproject.services.ApplicationUsersDetailsService;
+import com.example.webproject.services.InitService;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +31,6 @@ public class SecurityConfiguration {
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                 // the URL-s below are available for all users - logged in and anonymous
                         requestMatchers("/", "/login", "/register", "/login-error").permitAll().
-                // only for moderators
-                        requestMatchers("/pages/moderators").hasRole(UserRoleEnum.MODERATOR.name()).
                 // only for admins
                         requestMatchers("/pages/admins").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().
@@ -44,7 +45,7 @@ public class SecurityConfiguration {
                         defaultSuccessUrl("/", true).//use true argument if you always want to go there, otherwise go to previous page
                 failureForwardUrl("/users/login-error").
                 and().logout().//configure logout
-                logoutUrl("/users/logout").
+                logoutUrl("/logout").
                 logoutSuccessUrl("/").//go to homepage after logout
                 invalidateHttpSession(true).
                 and().
@@ -59,10 +60,10 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
-    //@Bean
-    //public UserDetailsService userDetailsService(UserRepository userRepository) {
-    //    return new ApplicationUserDetailsService(userRepository);
-    //}
+    @Bean
+    public UserDetailsService userDetailsService(UserRepository userRepository) {
+        return new ApplicationUsersDetailsService(userRepository);
+    }
 
     @Bean
     public SecurityContextRepository securityContextRepository() {

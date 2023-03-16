@@ -13,12 +13,24 @@ body {
   display: flex;
   align-items: center;
   cursor: pointer;
+
 }
 
 .sidebarOption .material-icons,
 .fa-twitter {
   padding: 20px;
+
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+
+
 }
+
+
 
 .sidebarOption h2 {
   font-weight: 800;

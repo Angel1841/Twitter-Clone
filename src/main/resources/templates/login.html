@@ -1,5 +1,6 @@
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <main class="main">
 
   <a class="button-twitter" href="http://localhost:8080/" target="_blank"></a>
@@ -20,12 +21,12 @@
       <input
               id = "username"
               name="username"
-
               type="text" min="2" max="50"
              placeholder="Username" class="login-fieldset-field">
       <input
               id = "password"
               name = "password"
+              value="password"
               type="password"
              min="2" max="50"
              placeholder="*****" class="login-fieldset-field">

@@ -49,7 +49,7 @@ public class AuthController {
         if(this.authService.isLogged()) {
             return "redirect:/home";
         }
-        return "register";
+        return "/register";
     }
 
     @PostMapping("/register")

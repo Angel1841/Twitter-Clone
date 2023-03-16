@@ -7,11 +7,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "users")
-public class UserEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+public class UserEntity extends BaseEntity{
 
     @Column(nullable = false, unique = true)
     private String username; // 3 symbols min
@@ -22,8 +18,13 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private List<UserRoleEntity> roles = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(
+            name = "users_roles",
+            joinColumns = { @JoinColumn(name = "user_id") },
+            inverseJoinColumns = { @JoinColumn(name = "role_id") }
+    )
+    private List<UserRoleEntity> roles; //–  user's role (UserEntity or Admin).
 
 
     public String getUsername() {
@@ -50,15 +51,6 @@ public class UserEntity {
 
     public UserEntity setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public UserEntity setId(long id) {
-        this.id = id;
         return this;
     }
 
