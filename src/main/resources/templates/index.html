@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="UTF-8">
@@ -15,9 +16,12 @@
 <nav>
     <div class="navbar">
         <ul>
-            <li>Login</li>
-            <li>Register</li>
-            <li>About</li>
+
+            <li><a href="@{/login}">Login</a></li>
+            <li><a href="@{/register}">Register</a></li>
+
+
+            <li ><a href="@{/about}">About</a></li>
 
         </ul>
     </div>

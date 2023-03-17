@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class HomeController {
 
-   // @GetMapping("/")
-    //public String indexPage(Model model){
-        // if not logged in redirect to index page
-    //    return "index";
-    //}
-
     @GetMapping("/home")
     public String homePage(Model model){
-        // if not logged in redirect to index page
         return "home";
+    }
+
+    @GetMapping("/profile")
+    public String profilePage(Model model){
+        return "profile";
     }
 
 }

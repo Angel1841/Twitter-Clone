@@ -29,8 +29,9 @@ public class SecurityConfiguration {
                         authorizeHttpRequests().
                 // allow access to all static files (images, CSS, js)
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
+                        requestMatchers("/", "/login", "/register").anonymous().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers("/", "/home", "/login", "/register", "/login-error").permitAll().
+                        requestMatchers( "/home", "/login-error", "/profile").authenticated().
                 // only for admins
                         requestMatchers("/pages/admins").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().

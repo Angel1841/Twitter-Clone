@@ -54,15 +54,17 @@
             <h2>Lists</h2>
         </div>
 
-        <div class="sidebarOption">
-            <span class="material-icons"> perm_identity </span>
-            <h2>Profile</h2>
-        </div>
+        <form method="POST" th:action="@{/profile}"  class="sidebarOption">
 
-        <div class="sidebarOption">
-            <span class="material-icons"> more_horiz </span>
-            <h2>More</h2>
-        </div>
+            <button type="submit" name="submit" value="value" class="material-icons" > perm_identity </button>
+            <h2>Profile</h2>
+
+        </form>
+
+        <!-- <div class="sidebarOption"> -->
+        <!--       <span class="material-icons"> more_horiz </span>  -->
+        <!--       <h2>More</h2> -->
+        <!-- </div> -->
 
         <form method="POST" th:action="@{/logout}"  class="sidebarOption">
 
@@ -71,12 +73,9 @@
 
         </form>
 
-         <!-- <button type="submit" name="submit" value="value" class="material-icons">Logout</button> -->
-
-
+        <!-- <button type="submit" name="submit" value="value" class="material-icons">Logout</button> -->
 
         <button class="sidebar__tweet">Tweet</button>
-
 
     </th:block>
 </div>
