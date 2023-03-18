@@ -3,7 +3,9 @@ package com.example.webproject.model.entities;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,6 +19,13 @@ public class UserEntity extends BaseEntity{
 
     @Column(nullable = false)
     private String email;
+
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Comment> comments;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Tweet> tweets;
 
     @ManyToMany(cascade = CascadeType.MERGE)
     @JoinTable(
@@ -68,4 +77,21 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public UserEntity setComments(Set<Comment> comments) {
+        this.comments = comments;
+        return this;
+    }
+
+    public Set<Tweet> getTweets() {
+        return tweets;
+    }
+
+    public UserEntity setTweets(Set<Tweet> tweets) {
+        this.tweets = tweets;
+        return this;
+    }
 }

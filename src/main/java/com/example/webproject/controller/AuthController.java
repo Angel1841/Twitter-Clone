@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolderStrategy;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.context.SecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -77,10 +78,13 @@ public class AuthController {
 
     @GetMapping("/login")
     public String login(){
+        if(this.authService.isLogged()) {
+            return "redirect:/home";
+        }
         return "/login";
     }
 
-    @PostMapping("/users/login-error")
+    @PostMapping("/login-error")
     public String onFailedLogin(
             @ModelAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY) String username,
             RedirectAttributes redirectAttributes) {
@@ -88,8 +92,9 @@ public class AuthController {
         redirectAttributes.addFlashAttribute(UsernamePasswordAuthenticationFilter.SPRING_SECURITY_FORM_USERNAME_KEY, username);
         redirectAttributes.addFlashAttribute("bad_credentials", true);
 
-        return "redirect:/users/login";
+        return "redirect:/login";
     }
+
 
 
 }
