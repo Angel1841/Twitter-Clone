@@ -1,6 +1,6 @@
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<div th:replace="~{fragments/head}"></div>
+
 <main class="main" >
 
   <a class="button-twitter" href="http://localhost:8080/" target="_blank"></a>
@@ -19,9 +19,10 @@
       <line class="bottom-right third" x1="100%" x2="50%" y1="100%" y2="100%"/>
 	</svg>
     <fieldset class="login-fieldset">
+
       <input
               id = "username"
-              name="username"
+              name = "username"
               th:value="${username}"
               type="text" min="2" max="50"
              placeholder="Username" class="login-fieldset-field">
@@ -29,19 +30,21 @@
               id = "password"
               name = "password"
               type="password"
-
              min="2" max="50"
              placeholder="*****" class="login-fieldset-field">
+
+
 
       <button type="submit" class="login-fieldset-submit" value="Login">
         Login
       </button>
+
     </fieldset>
 
-    <p th:if="${badCredentials}"
-       class="errors alert alert-danger">
-      Invalid username or password.
-    </p>
-
   </form>
+
+  <h1 class="errors alert alert-danger"  th:if="${bad_credentials}">
+    Invalid username or password.
+  </h1>
+
 </main>

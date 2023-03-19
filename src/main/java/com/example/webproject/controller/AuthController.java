@@ -75,7 +75,6 @@ public class AuthController {
         return "redirect:/home";
     }
 
-
     @GetMapping("/login")
     public String login(){
         if(this.authService.isLogged()) {
@@ -94,6 +93,7 @@ public class AuthController {
 
         return "redirect:/login";
     }
+
 
 
 

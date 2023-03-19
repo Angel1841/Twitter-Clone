@@ -6,12 +6,12 @@
     <div class="container mt-5">
         <div class="row d-flex justify-content-center">
             <div class="col-md-7">
-                <div class="profile-card p-3 py-4" th:object="${user}">
+                <div class="profile-card p-3 py-4" th:object="${user}" th:method="POST">
                     <div class="text-center"><img src="/images/profile.jpg" width="100" class="rounded-circle"></div>
                     <div class="text-center mt-3">
 
                         <span class="bg-secondary p-1 px-4 rounded text-white" th:text="*{username}">Pro</span>
-                        <h5 class="mt-4 mb-0" th:text="*{role}"></h5>
+                        <h5 class="mt-4 mb-0" th:each="role: *{role}" th:text="role"></h5>
                         <span>UI/UX Designer</span>
                         <h5 class="mt-2 mb-0" th:text="*{comments}">Username</h5>
                         <span>UI/UX Designer</span>

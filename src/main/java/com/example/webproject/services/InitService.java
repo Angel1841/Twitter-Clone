@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+
 @Service
 public class InitService {
 
@@ -22,7 +25,6 @@ public class InitService {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
-
 
     public void init() {
         initRoles();
@@ -44,8 +46,10 @@ public class InitService {
         var adminUser = new UserEntity().
                 setEmail("admin@example.com").
                 setUsername("adminkata").
-                setPassword(passwordEncoder.encode("topsecret")).
-                setRoles(userRoleRepository.findAll());
+                setPassword(passwordEncoder.encode("asdasd")).
+                setRoles(userRoleRepository.findAll())
+                .setComments(new HashSet<>())
+                .setTweets(new HashSet<>());
 
         userRepository.save(adminUser);
     }
