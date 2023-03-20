@@ -5,6 +5,7 @@ import com.example.webproject.services.AuthService;
 import com.example.webproject.services.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -55,7 +56,7 @@ public class AuthController {
 
     @PostMapping("/register")
     public String registerNewUser(
-            UserRegistrationDTO registrationDTO,
+            @Valid UserRegistrationDTO registrationDTO,
             HttpServletRequest request,
             HttpServletResponse response) {
 

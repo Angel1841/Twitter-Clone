@@ -22,6 +22,7 @@ public class HomeController {
     }
 
 
+
     @GetMapping("/home")
     public String homePage(Model model){
         return "/home";
