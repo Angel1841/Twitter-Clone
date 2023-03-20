@@ -27,7 +27,7 @@ public class HomeController {
         return "/home";
     }
 
-    @GetMapping("/profile")
+    @PostMapping("/profile")
     public String profile(Principal principal, Model model) {
         String username = principal.getName();
         UserEntity user = authService.getUser(username);

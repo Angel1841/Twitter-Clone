@@ -27,7 +27,7 @@ public class UserEntity extends BaseEntity{
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Tweet> tweets;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
             joinColumns = { @JoinColumn(name = "user_id") },

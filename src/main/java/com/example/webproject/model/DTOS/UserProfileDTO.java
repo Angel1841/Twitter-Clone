@@ -15,7 +15,7 @@ public class UserProfileDTO {
 
     private String email;
 
-    private List<UserRoleEntity> role;
+    private List<UserRoleEntity> roles;
 
     private Set<Comment> comments;
 
@@ -24,10 +24,10 @@ public class UserProfileDTO {
     public UserProfileDTO() {
     }
 
-    public UserProfileDTO(String username, String email, List<UserRoleEntity> role, Set<Comment> comments, Set<Tweet> tweets) {
+    public UserProfileDTO(String username, String email, List<UserRoleEntity> roles, Set<Comment> comments, Set<Tweet> tweets) {
         this.username = username;
         this.email = email;
-        this.role = role;
+        this.roles = roles;
         this.comments = new HashSet<>();
         this.tweets = new HashSet<>();
     }
@@ -50,12 +50,12 @@ public class UserProfileDTO {
         return this;
     }
 
-    public List<UserRoleEntity> getRole() {
-        return role;
+    public List<UserRoleEntity> getRoles() {
+        return roles;
     }
 
-    public UserProfileDTO setRole(List<UserRoleEntity> role) {
-        this.role = role;
+    public UserProfileDTO setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
         return this;
     }
 
