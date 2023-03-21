@@ -2,7 +2,10 @@ package com.example.webproject.services;
 
 import com.example.webproject.model.DTOS.UserRegistrationDTO;
 import com.example.webproject.model.entities.UserEntity;
+import com.example.webproject.model.entities.UserRoleEntity;
+import com.example.webproject.model.enums.UserRoleEnum;
 import com.example.webproject.repository.UserRepository;
+import com.example.webproject.repository.UserRoleRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,24 +22,32 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserDetailsService userDetailsService;
 
+    private final UserRoleRepository userRoleRepository;
+
 
     public UserService(UserRepository userRepository,
                        PasswordEncoder passwordEncoder,
-                       UserDetailsService userDetailsService) {
+                       UserDetailsService userDetailsService, UserRoleRepository userRoleRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.userDetailsService = userDetailsService;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public void registerUser(UserRegistrationDTO registrationDTO,
                              Consumer<Authentication> successfulLoginProcessor) {
 
+        var userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
+
         UserEntity userEntity = new UserEntity().
                 setUsername(registrationDTO.getUsername())
                         .setEmail(registrationDTO.getEmail())
-                                .setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
+                                .setPassword(passwordEncoder.encode(registrationDTO.getPassword()))
+                                    .setRoles(userRoleRepository.findUserRoleEntityByRole(UserRoleEnum.USER));
+
 
         userRepository.save(userEntity);
+
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(registrationDTO.getEmail());
 
