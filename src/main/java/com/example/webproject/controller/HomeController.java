@@ -14,7 +14,7 @@ import java.security.Principal;
 @Controller
 public class HomeController {
 
-    private AuthService authService;
+    private final AuthService authService;
 
     @Autowired
     public HomeController(AuthService authService) {

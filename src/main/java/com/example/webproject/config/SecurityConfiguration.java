@@ -47,11 +47,13 @@ public class SecurityConfiguration {
                 failureForwardUrl("/login-error").
                 and().logout().//configure logout
                 logoutUrl("/logout").
-                logoutSuccessUrl("/").//go to homepage after logout
+                logoutSuccessUrl("/").
+                deleteCookies("JSESSIONID").
                 invalidateHttpSession(true).
                 and().
                 securityContext().
-                securityContextRepository(securityContextRepository);
+                securityContextRepository(securityContextRepository).and().
+                exceptionHandling().accessDeniedPage("/unauthorized");
 
         return http.build();
     }
