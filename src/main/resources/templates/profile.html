@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <link rel="stylesheet" href="/css/profile.css" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <meta charset="UTF-8">
+    <title>Witter</title>
+
+
+
+</head>
+<body>
+
+<header th:replace="~{fragments/commons::nav}"></header>
+
+<main class="p-5 align-content-center bg-blur my-register-div" >
+
+
+    <div class="container mt-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-7">
+                <div class="profile-card p-3 py-4" th:object="${user}" th:method="POST">
+
+                    <div class="main_container">
+                        <div class="profile_container">
+
+                            <img class="background_img" src="https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519_1280.jpg" alt="background" />
+                            <img class="user_img" src="/images/havertz.jpg" alt="user img" />
+
+                            <span class="bg-secondary p-1 px-5 rounded text-white mt-2 mb-1" th:text="*{username}"></span>
+
+                            <h3 class="mt-2 mb-1">Roles:</h3>
+                            <i class="mt-2 mb-1" th:each="role: *{roles}" th:text="${role.getRole()}"></i>
+
+                            <h3 class="mt-2 mb-1">Email:</h3>
+                            <span th:text="*{email}"></span>
+
+
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+</body>
+</html>
