@@ -11,6 +11,7 @@ import com.example.webproject.repository.LikeRepository;
 import com.example.webproject.repository.RetweetRepository;
 import com.example.webproject.repository.TweetRepository;
 import com.example.webproject.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class TweetService {
 
     private final UserRepository userRepository;
@@ -35,14 +37,6 @@ public class TweetService {
 
     private final ModelMapper modelMapper;
 
-    public TweetService(UserRepository userRepository, AuthService authService, TweetRepository tweetRepository, LikeRepository likeRepository, RetweetRepository retweetRepository, ModelMapper modelMapper) {
-        this.userRepository = userRepository;
-        this.authService = authService;
-        this.tweetRepository = tweetRepository;
-        this.likeRepository = likeRepository;
-        this.retweetRepository = retweetRepository;
-        this.modelMapper = modelMapper;
-    }
 
 
     @Transactional
@@ -183,6 +177,16 @@ public class TweetService {
         List<Like> likes = this.likeRepository.findAllByUser(user).orElseThrow();
 
         return likes.stream().map(Like::getTweet).map(m -> this.modelMapper.map(m, TweetDTO.class)).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Boolean isRetweeted(LikeRetweetDTO likeRetweetDto, Principal principal) {
+        String username = principal.getName();
+        UserEntity user = authService.getUser(username);
+
+        Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+
+        return this.retweetRepository.findByUserAndTweet(user, tweet).isPresent();
     }
 
 }
