@@ -1,7 +1,6 @@
 package com.example.webproject.services;
 
-import com.example.webproject.model.entities.UserEntity;
-import com.example.webproject.model.entities.UserRoleEntity;
+import com.example.webproject.model.entities.*;
 import com.example.webproject.model.enums.UserRoleEnum;
 import com.example.webproject.repository.UserRepository;
 import com.example.webproject.repository.UserRoleRepository;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Set;
 
 @Service
 public class InitService {
@@ -47,9 +47,11 @@ public class InitService {
                 setEmail("admin@example.com").
                 setUsername("adminkata").
                 setPassword(passwordEncoder.encode("asdasd")).
-                setRoles(userRoleRepository.findAll())
-                .setComments(new HashSet<>())
-                .setTweets(new HashSet<>());
+                setRoles(userRoleRepository.findAll()).
+                setLikes(new HashSet<Like>()).
+                setTweets(new HashSet<Tweet>()).
+                setRetweets(new HashSet<Retweet>());
+
 
         userRepository.save(adminUser);
     }

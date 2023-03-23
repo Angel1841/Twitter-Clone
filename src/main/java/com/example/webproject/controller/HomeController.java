@@ -3,6 +3,7 @@ package com.example.webproject.controller;
 import com.example.webproject.model.DTOS.UserProfileDTO;
 import com.example.webproject.model.entities.UserEntity;
 import com.example.webproject.services.AuthService;
+import com.example.webproject.services.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,15 +17,20 @@ public class HomeController {
 
     private final AuthService authService;
 
+    private final TweetService tweetService;
+
     @Autowired
-    public HomeController(AuthService authService) {
+    public HomeController(AuthService authService, TweetService tweetService) {
         this.authService = authService;
+        this.tweetService = tweetService;
     }
 
 
 
     @GetMapping("/home")
     public String homePage(Model model){
+        model.addAttribute("Tweets", tweetService.getAllTweets());
+
         return "/home";
     }
 
@@ -37,8 +43,9 @@ public class HomeController {
                 username,
                 user.getEmail(),
                 user.getRoles(),
-                user.getComments(),
-                user.getTweets()
+                user.getLikes(),
+                user.getTweets(),
+                user.getRetweets()
         );
 
         model.addAttribute("user", userProfileDTO);

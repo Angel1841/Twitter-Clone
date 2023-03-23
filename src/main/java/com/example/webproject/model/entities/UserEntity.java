@@ -9,23 +9,30 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
-public class UserEntity extends BaseEntity{
+public class UserEntity{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, unique = true)
-    private String username; // 3 symbols min
+    private String username;
 
     @Column(nullable = false)
-    private String password;  //4 symbols min
+    private String password;
 
     @Column(nullable = false)
     private String email;
 
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
-    private Set<Comment> comments;
+    private Set<Like> likes;
 
     @OneToMany(mappedBy = "user", orphanRemoval = true)
     private Set<Tweet> tweets;
+
+    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    private Set<Retweet> retweets;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
@@ -33,8 +40,21 @@ public class UserEntity extends BaseEntity{
             joinColumns = { @JoinColumn(name = "user_id") },
             inverseJoinColumns = { @JoinColumn(name = "role_id") }
     )
+
     private List<UserRoleEntity> roles; //–  user's role (UserEntity or Admin).
 
+    public UserEntity() {
+    }
+
+    public UserEntity(String username, String password, String email, Set<Like> likes, Set<Tweet> tweets, Set<Retweet> retweets, List<UserRoleEntity> roles) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.likes = new HashSet<>();
+        this.tweets = new HashSet<>();
+        this.retweets = new HashSet<>();
+        this.roles = new ArrayList<>();
+    }
 
     public String getUsername() {
         return username;
@@ -63,26 +83,12 @@ public class UserEntity extends BaseEntity{
         return this;
     }
 
-    public List<UserRoleEntity> getRoles() {
-        return roles;
+    public Set<Like> getLikes() {
+        return likes;
     }
 
-    public UserEntity setRoles(List<UserRoleEntity> roles) {
-        this.roles = roles;
-        return this;
-    }
-
-    public UserEntity addRole(UserRoleEntity role) {
-        this.roles.add(role);
-        return this;
-    }
-
-    public Set<Comment> getComments() {
-        return comments;
-    }
-
-    public UserEntity setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public UserEntity setLikes(Set<Like> likes) {
+        this.likes = likes;
         return this;
     }
 
@@ -92,6 +98,33 @@ public class UserEntity extends BaseEntity{
 
     public UserEntity setTweets(Set<Tweet> tweets) {
         this.tweets = tweets;
+        return this;
+    }
+
+    public Set<Retweet> getRetweets() {
+        return retweets;
+    }
+
+    public UserEntity setRetweets(Set<Retweet> retweets) {
+        this.retweets = retweets;
+        return this;
+    }
+
+    public List<UserRoleEntity> getRoles() {
+        return roles;
+    }
+
+    public UserEntity setRoles(List<UserRoleEntity> roles) {
+        this.roles = roles;
+        return this;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public UserEntity setId(Long id) {
+        this.id = id;
         return this;
     }
 }

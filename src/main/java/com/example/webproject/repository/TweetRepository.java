@@ -14,8 +14,5 @@ public interface TweetRepository extends JpaRepository<Tweet, Long> {
 
     Optional<List<Tweet>> findAllByUser(UserEntity user);
 
-    Optional<List<Tweet>> findAllByType(TweetType type);
-
-    Optional<List<Tweet>> findAllByUserAndType(UserEntity user, TweetType type);
 
 }

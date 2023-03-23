@@ -4,6 +4,7 @@ import com.example.webproject.model.entities.Tweet;
 import com.example.webproject.model.entities.UserEntity;
 import lombok.*;
 
+import java.text.DateFormat;
 import java.time.Instant;
 
 @Getter
@@ -14,11 +15,11 @@ import java.time.Instant;
 public class TweetDTO {
 
     private Long id;
-    private String text;
-    private Tweet tweet;
     private UserEntity user;
+    private String text;
+    //private Tweet tweet;
     private Integer retweetCounter;
     private Integer likeCounter;
-    private Instant createDate;
+    private DateFormat createDate;
 
 }

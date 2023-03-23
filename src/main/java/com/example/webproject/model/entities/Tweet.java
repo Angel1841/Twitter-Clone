@@ -3,7 +3,10 @@ package com.example.webproject.model.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.text.DateFormat;
 import java.time.Instant;
+import java.util.Date;
+
 @Entity
 @Getter
 @Setter
@@ -11,9 +14,13 @@ import java.time.Instant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tweets")
-public class Tweet extends BaseEntity{
+public class Tweet{
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private UserEntity user;
 
@@ -23,12 +30,15 @@ public class Tweet extends BaseEntity{
 
     private Integer likeCounter;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tweet_id", referencedColumnName = "id")
-    private Tweet tweet;
+    //@ManyToOne(fetch = FetchType.EAGER)
+    //@JoinColumn(name = "tweet_id", referencedColumnName = "id")
+    //private Tweet tweet;
 
-    private Instant createdDate;
+    private Date createdDate;
 
 
 
 }
+
+
+

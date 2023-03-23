@@ -1,6 +1,7 @@
 package com.example.webproject.controller;
 
 import com.example.webproject.model.DTOS.TweetDTO;
+import com.example.webproject.model.entities.Tweet;
 import com.example.webproject.services.TweetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,9 @@ public class TweetController {
     private final TweetService tweetService;
 
     @PostMapping("/create")
-    public ResponseEntity<HttpStatus> createTweet(@RequestBody TweetDTO tweetDto, Principal principal){
-        this.tweetService.tweet(tweetDto, principal);
-        return ResponseEntity.ok().build();
+    public String createTweet(String text, Principal principal){
+        this.tweetService.tweet(text, principal);
+        return "redirect:/home";
     }
 
     @DeleteMapping("/delete/{id}")

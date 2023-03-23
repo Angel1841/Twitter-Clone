@@ -1,10 +1,11 @@
 package com.example.webproject.model.DTOS;
 
-import com.example.webproject.model.entities.Comment;
+import com.example.webproject.model.entities.Like;
+import com.example.webproject.model.entities.Retweet;
 import com.example.webproject.model.entities.Tweet;
 import com.example.webproject.model.entities.UserRoleEntity;
-import jakarta.persistence.OneToMany;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -17,19 +18,22 @@ public class UserProfileDTO {
 
     private List<UserRoleEntity> roles;
 
-    private Set<Comment> comments;
+    private Set<Like> likes;
 
     private Set<Tweet> tweets;
+
+    private Set<Retweet> retweets;
 
     public UserProfileDTO() {
     }
 
-    public UserProfileDTO(String username, String email, List<UserRoleEntity> roles, Set<Comment> comments, Set<Tweet> tweets) {
+    public UserProfileDTO(String username, String email, List<UserRoleEntity> roles, Set<Like> likes, Set<Tweet> tweets, Set<Retweet> retweets) {
         this.username = username;
         this.email = email;
-        this.roles = roles;
-        this.comments = new HashSet<>();
+        this.likes = new HashSet<>();
         this.tweets = new HashSet<>();
+        this.retweets = new HashSet<>();
+        this.roles = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -59,12 +63,12 @@ public class UserProfileDTO {
         return this;
     }
 
-    public Set<Comment> getComments() {
-        return comments;
+    public Set<Like> getLikes() {
+        return likes;
     }
 
-    public UserProfileDTO setComments(Set<Comment> comments) {
-        this.comments = comments;
+    public UserProfileDTO setLikes(Set<Like> likes) {
+        this.likes = likes;
         return this;
     }
 
@@ -74,6 +78,15 @@ public class UserProfileDTO {
 
     public UserProfileDTO setTweets(Set<Tweet> tweets) {
         this.tweets = tweets;
+        return this;
+    }
+
+    public Set<Retweet> getRetweets() {
+        return retweets;
+    }
+
+    public UserProfileDTO setRetweets(Set<Retweet> retweets) {
+        this.retweets = retweets;
         return this;
     }
 }

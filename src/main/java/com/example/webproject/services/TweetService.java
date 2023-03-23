@@ -17,7 +17,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.text.DateFormat;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,34 +40,32 @@ public class TweetService {
 
     private final ModelMapper modelMapper;
 
-
-
     @Transactional
-    public void tweet(TweetDTO tweetDto, Principal principal) {
+    public void tweet(String tweetText, Principal principal) {
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
 
-        if(tweetDto.getId() != null){
-            Tweet tweet = tweetRepository.findById(tweetDto.getId()).orElseThrow();
+        this.createTweet(user, tweetText);
+        //if(tweet.getId() != null){
+        //    tweet = tweetRepository.findById(tweet.getId()).map(m -> this.modelMapper.map(m, Tweet.class)).orElseThrow();
+//
+        //    this.tweetRepository.save(tweet);
+        //}
 
-            this.tweetRepository.save(tweet);
-        }
-
-        else{
-            this.createTweet(user, tweetDto.getText(), null);
-        }
+        //else{
+        //    this.createTweet(user, tweet.getText());
+        //}
 
     }
 
-    private void createTweet(UserEntity user, String text, Tweet tweet){
+    private void createTweet(UserEntity user, String text){
         this.tweetRepository.save(
                 Tweet.builder()
                         .user(user)
                         .text(text)
                         .retweetCounter(0)
                         .likeCounter(0)
-                        .tweet(tweet)
-                        .createdDate(Instant.now())
+                        .createdDate(Date.from(Instant.now()))
                         .build()
         );
     }
@@ -92,6 +93,7 @@ public class TweetService {
         else{
             tweet.setLikeCounter(tweet.getLikeCounter() + 1);
             this.tweetRepository.save(tweet);
+
             this.likeRepository.save(
                     Like.builder()
                             .user(user)
@@ -127,8 +129,8 @@ public class TweetService {
     }
 
     @Transactional(readOnly = true)
-    public List<TweetDTO> getAllTweets() {
-        return this.tweetRepository.findAll().stream().map(m -> this.modelMapper.map(m, TweetDTO.class)).collect(Collectors.toList());
+    public List<Tweet> getAllTweets() {
+        return new ArrayList<>(this.tweetRepository.findAll());
     }
 
 
