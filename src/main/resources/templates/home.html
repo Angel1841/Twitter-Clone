@@ -8,6 +8,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Twitter Clone - Final</title>
     <link rel="stylesheet" href="/css/styles.css"/>
+    <link rel="stylesheet" href="/css/likeAndRetweet.css"/>
+
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
     <link
             th:action="@{/home}"
@@ -110,7 +112,7 @@
     <!-- tweetbox ends -->
 
 
-        <!-- post starts -->
+    <!-- post starts -->
     <form th:each="tweet : ${Tweets}" class="post">
             <div class="post__avatar">
                 <img
@@ -136,10 +138,22 @@
 
                 </div>
 
+                <!-- LIKE AND RETWEET -->
+
                 <div class="post__footer">
+
                     <span class="material-icons"> repeat </span>
+
+
+                    <button type="submit" class="button button-like" th:href="@{/tweets/like-tweet/}">
+                        <i class="fa fa-heart"></i>
+                        <a class="mb-1 align-text-bottom">Likes :<span th:text="${tweet.getLikeCounter()}"/></a>
+                    </button>
+
+
+
                     <span class="material-icons"> favorite_border </span>
-                    <span class="material-icons"> publish </span>
+
                 </div>
 
         </div>

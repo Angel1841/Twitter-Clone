@@ -1,5 +1,6 @@
 package com.example.webproject.controller;
 
+import com.example.webproject.model.DTOS.LikeRetweetDTO;
 import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.entities.Tweet;
 import com.example.webproject.services.TweetService;
@@ -7,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
@@ -21,6 +23,14 @@ public class TweetController {
     @PostMapping("/create")
     public String createTweet(String text, Principal principal){
         this.tweetService.tweet(text, principal);
+        return "redirect:/home";
+    }
+
+    @PostMapping("/tweets/like-tweet/")
+    public String likeTweet(@RequestBody LikeRetweetDTO tweet, Principal principal){
+
+        this.tweetService.like(tweet, principal);
+
         return "redirect:/home";
     }
 

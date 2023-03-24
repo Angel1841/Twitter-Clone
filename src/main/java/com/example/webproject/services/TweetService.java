@@ -46,6 +46,7 @@ public class TweetService {
         UserEntity user = authService.getUser(username);
 
         this.createTweet(user, tweetText);
+
         //if(tweet.getId() != null){
         //    tweet = tweetRepository.findById(tweet.getId()).map(m -> this.modelMapper.map(m, Tweet.class)).orElseThrow();
 //
@@ -77,11 +78,12 @@ public class TweetService {
     }
 
     @Transactional
-    public void like(LikeRetweetDTO likeRetweetDto, Principal principal) {
+    public void like(LikeRetweetDTO likeRetweetDTO, Principal principal) {
+
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
 
-        Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+        Tweet tweet = this.tweetRepository.findById(likeRetweetDTO.getTweetId()).orElseThrow();
 
         Optional<Like> optional = this.likeRepository.findByUserAndTweet(user, tweet);
 

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 
 <html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+      xmlns:th="http://www.thymeleaf.org"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
@@ -10,12 +11,82 @@
     <meta charset="UTF-8">
     <title>Witter</title>
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="/css/styles.css" />
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 
 
 </head>
 <body>
 
-<header th:replace="~{fragments/commons::nav}"></header>
+<!-- <header th:replace="~{fragments/commons::nav}"></header> -->
+
+<div class="sidebar">
+
+
+    <i class="fab fa-twitter"></i>
+    <form method="GET" th:action="@{/home}" class="sidebarOption">
+
+        <button type="submit" value="home" class="material-icons" > home </button>
+        <h2>Home</h2>
+
+    </form>
+
+    <div class="sidebarOption">
+        <span class="material-icons"> search </span>
+        <h2>Explore</h2>
+    </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+        <div class="sidebarOption">
+            <span class="material-icons"> notifications_none </span>
+            <h2>Notifications</h2>
+        </div>
+
+        <div class="sidebarOption">
+            <span class="material-icons"> mail_outline </span>
+            <h2>Tweets</h2>
+        </div>
+
+        <div class="sidebarOption">
+            <span class="material-icons"> bookmark_border </span>
+            <h2>Liked posts</h2>
+        </div>
+
+        <div class="sidebarOption">
+            <span class="material-icons"> list_alt </span>
+            <h2>Lists</h2>
+        </div>
+
+        <form method="POST" th:action="@{/profile}"  class="sidebarOption sidebarOption active">
+
+            <button type="submit" name="submit" value="value" class="material-icons" > perm_identity </button>
+            <h2>Profile</h2>
+
+        </form>
+
+        <!-- <div class="sidebarOption"> -->
+        <!--       <span class="material-icons"> more_horiz </span>  -->
+        <!--       <h2>More</h2> -->
+        <!-- </div> -->
+
+        <form method="POST" th:action="@{/logout}"  class="sidebarOption">
+
+            <button type="submit" name="submit" value="value" class="material-icons" > logout </button>
+            <h2>Logout</h2>
+
+        </form>
+
+        <!-- <button type="submit" name="submit" value="value" class="material-icons">Logout</button> -->
+
+        <button class="sidebar__tweet">Tweet</button>
+
+    </th:block>
+</div>
+
 
 <main class="p-5 align-content-center bg-blur my-register-div" >
 
