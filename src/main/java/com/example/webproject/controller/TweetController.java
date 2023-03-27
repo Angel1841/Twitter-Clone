@@ -26,7 +26,7 @@ public class TweetController {
         return "redirect:/home";
     }
 
-    @PostMapping("/tweets/like-tweet/")
+    @GetMapping("/tweets/like-tweet/")
     public String likeTweet(@RequestBody LikeRetweetDTO tweet, Principal principal){
 
         this.tweetService.like(tweet, principal);
