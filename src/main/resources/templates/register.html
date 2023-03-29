@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <body>
 
@@ -8,9 +8,12 @@
     <form
             th:action="@{/register}"
             th:method="POST"
+            th:object="${registrationDTO}"
             class="register">
 
         <link rel="stylesheet" href="/css/loginPage.css" />
+        <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
         <svg class="login-sides">
             <line class="top-right first" x1="50%" x2="100%" y1="0" y2="0"/>
             <line class="top-left first" x1="50%" x2="0" y1="0" y2="0"/>
@@ -19,17 +22,26 @@
             <line class="bottom-left third" x1="0" x2="50%" y1="100%" y2="100%"/>
             <line class="bottom-right third" x1="100%" x2="50%" y1="100%" y2="100%"/>
         </svg>
+
         <fieldset class="login-fieldset">
 
-            <input
+            <input th:field="*{username}"
                     id="username"
                     name="username"
                     type="text"
                     placeholder="Username"
                     min="2" max="20"
-                    class="login-fieldset-field">
+                    class="login-fieldset-field"/>
+
+            <p th:if="${#fields.hasErrors('username')}"
+               class="alert alert-danger login-fieldset-field ">
+                Username is required.
+            </p>
+
+
 
             <input
+                    th:field = "*{email}"
                     id="email"
                     name="email"
                     type="email"
@@ -37,27 +49,43 @@
                     min="2" max="20"
                     class="login-fieldset-field">
 
+            <p th:if="${#fields.hasErrors('email')}"
+               class="alert alert-danger login-fieldset-field ">
+                Valid email is required.
+            </p>
+
             <input
                     id="password"
                     name="password"
                     type="password"
                     placeholder="*****"
-                    min="2" max="20"
-                    class="login-fieldset-field">
+                    min="5" max="20"
+                    class="login-fieldset-field"/>
+
+            <p th:if="${#fields.hasErrors('password')}"
+               class="alert alert-danger login-fieldset-field ">
+                Password is required.
+            </p>
 
             <input
                     id="confirmPassword"
                     name="confirmPassword"
                     type="password"
                     placeholder="*****"
-                    min="2" max="20"
+                    min="5" max="20"
                     class="login-fieldset-field">
+
+            <h2 th:if="${#fields.hasErrors('confirmPassword')}"
+                class="alert alert-danger login-fieldset-field ">
+                Passwords does not match.
+            </h2>
 
             <button type="submit" class="login-fieldset-submit">
                 Register
             </button>
 
         </fieldset>
+
     </form>
 </main>
 

@@ -13,6 +13,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.Consumer;
 
 @Service
@@ -34,30 +37,15 @@ public class UserService {
         this.userRoleRepository = userRoleRepository;
     }
 
-    public void registerUser(UserRegistrationDTO registrationDTO,
-                             Consumer<Authentication> successfulLoginProcessor) {
-
-        var userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
+    public void registerUser(UserRegistrationDTO registrationDTO) {
 
         UserEntity userEntity = new UserEntity().
-                setUsername(registrationDTO.getUsername())
-                        .setEmail(registrationDTO.getEmail())
-                                .setPassword(passwordEncoder.encode(registrationDTO.getPassword()))
-                                    .setRoles(userRoleRepository.findUserRoleEntityByRole(UserRoleEnum.USER));
+                setUsername(registrationDTO.getUsername()).
 
+                setEmail(registrationDTO.getEmail()).
+                setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
         userRepository.save(userEntity);
-
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(registrationDTO.getEmail());
-
-        Authentication authentication = new UsernamePasswordAuthenticationToken(
-                userDetails,
-                userDetails.getPassword(),
-                userDetails.getAuthorities()
-        );
-
-        successfulLoginProcessor.accept(authentication);
     }
 
 

@@ -1,17 +1,29 @@
 package com.example.webproject.model.DTOS;
 
+import com.example.webproject.validations.PasswordMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+@PasswordMatch(password = "password", confirmPassword = "confirmPassword")
 public class UserRegistrationDTO {
-
+    @NotNull
+    @Size(min = 2, max = 20)
     private String username;
 
+    @NotBlank
+    @Email
     private String email;
 
+
+    @NotNull
+    @Size(min = 5, max = 20)
     private String password;
 
+
+    @NotNull
+    @Size(min = 5, max = 20)
     private String confirmPassword;
 
     public UserRegistrationDTO() {

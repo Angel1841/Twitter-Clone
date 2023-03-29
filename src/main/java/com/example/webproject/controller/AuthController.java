@@ -35,7 +35,7 @@ public class AuthController {
         this.securityContextRepository = securityContextRepository;
     }
 
-    @ModelAttribute("registrationDTO")
+    @ModelAttribute(name = "registrationDTO")
     public UserRegistrationDTO initRegistrationDTO(){
         return new UserRegistrationDTO();
     }
@@ -55,26 +55,24 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String registerNewUser(
+    public String postRegister(
             @Valid UserRegistrationDTO registrationDTO,
-            HttpServletRequest request,
-            HttpServletResponse response) {
+            BindingResult bindingResult,
+            RedirectAttributes redirectAttributes) {
 
+        if (bindingResult.hasErrors()) {
+            redirectAttributes
+                    .addFlashAttribute("registrationDTO", registrationDTO)
+                    .addFlashAttribute("org.springframework.validation.BindingResult." + "registrationDTO", bindingResult);
 
-        userService.registerUser(registrationDTO, successfulAuth -> {
-            // populating security context
-            SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
+            return "redirect:/register";
+        }
 
-            SecurityContext context = strategy.createEmptyContext();
-            context.setAuthentication(successfulAuth);
+        userService.registerUser(registrationDTO);
 
-            strategy.setContext(context);
-
-            securityContextRepository.saveContext(context, request, response);
-        });
-
-        return "redirect:/home";
+        return "redirect:/login";
     }
+
 
     @GetMapping("/login")
     public String login(){
