@@ -127,7 +127,7 @@
                 <div class="post__header">
 
                     <div class="post__headerText">
-                        <span th:text="${tweet.getUser().getUsername()}"/>
+                        <span style="font-weight:bold" th:text="${tweet.getUser().getUsername()}"/>
                             <span class="post__headerSpecial">
                                 <span class="material-icons post__badge"> verified </span>@<span th:text="${tweet.getUser().getUsername()}"/></span>
 

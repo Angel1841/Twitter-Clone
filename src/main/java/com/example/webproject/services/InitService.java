@@ -30,7 +30,7 @@ public class InitService {
         initRoles();
         initAdmin();
     }
-
+    
     private void initRoles() {
         if (userRoleRepository.count() == 0) {
             var userRole = new UserRoleEntity().setRole(UserRoleEnum.USER);

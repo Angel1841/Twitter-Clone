@@ -41,7 +41,7 @@ public class UserService {
 
         UserEntity userEntity = new UserEntity().
                 setUsername(registrationDTO.getUsername()).
-
+                setRoles(userRoleRepository.findUserRoleEntityByRole(UserRoleEnum.USER)).
                 setEmail(registrationDTO.getEmail()).
                 setPassword(passwordEncoder.encode(registrationDTO.getPassword()));
 
