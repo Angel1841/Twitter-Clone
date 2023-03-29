@@ -22,14 +22,23 @@ public class TweetController {
 
     @PostMapping("/create")
     public String createTweet(String text, Principal principal){
+
         this.tweetService.tweet(text, principal);
         return "redirect:/home";
     }
 
-    @GetMapping("/tweets/like-tweet/")
-    public String likeTweet(@RequestBody LikeRetweetDTO tweet, Principal principal){
+    @RequestMapping("/like-tweet/{id}")
+    public String likeTweet(@PathVariable(name = "id") Long id, Principal principal){
 
-        this.tweetService.like(tweet, principal);
+        this.tweetService.like(id, principal);
+
+        return "redirect:/home";
+    }
+
+    @RequestMapping("/retweet-tweet/{id}")
+    public String retweetTweet(@PathVariable(name = "id") Long id, Principal principal){
+
+        this.tweetService.retweet(id, principal);
 
         return "redirect:/home";
     }

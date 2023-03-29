@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @AllArgsConstructor
-@Table(name = "tweets")
+@Table(name = "likes")
 public class Like extends BaseSingleAction {
 
 

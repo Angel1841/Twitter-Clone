@@ -17,11 +17,11 @@ public class RetweetController {
 
     private final TweetService tweetService;
 
-    @PostMapping("/retweet")
-    public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetDTO likeRetweetDto, Principal principal){
-        this.tweetService.retweet(likeRetweetDto, principal);
-        return ResponseEntity.ok().build();
-    }
+    //@PostMapping("/retweet")
+    //public ResponseEntity<HttpStatus> postRetweet(@RequestBody LikeRetweetDTO likeRetweetDto, Principal principal){
+    //    this.tweetService.retweet(likeRetweetDto, principal);
+    //    return ResponseEntity.ok().build();
+    //}
 
     @PostMapping("/is-retweeted")
     public ResponseEntity<Boolean> isRetweeted(@RequestBody LikeRetweetDTO likeRetweetDto, Principal principal){

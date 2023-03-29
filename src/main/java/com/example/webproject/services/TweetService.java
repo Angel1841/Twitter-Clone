@@ -78,12 +78,12 @@ public class TweetService {
     }
 
     @Transactional
-    public void like(LikeRetweetDTO likeRetweetDTO, Principal principal) {
+    public void like(Long id, Principal principal) {
 
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
 
-        Tweet tweet = this.tweetRepository.findById(likeRetweetDTO.getTweetId()).orElseThrow();
+        Tweet tweet = this.tweetRepository.findById(id).orElseThrow();
 
         Optional<Like> optional = this.likeRepository.findByUserAndTweet(user, tweet);
 
@@ -106,11 +106,11 @@ public class TweetService {
     }
 
     @Transactional
-    public void retweet(LikeRetweetDTO likeRetweetBookmarkDto, Principal principal) {
+    public void retweet(Long id, Principal principal) {
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
 
-        Tweet tweet = this.tweetRepository.findById(likeRetweetBookmarkDto.getTweetId()).orElseThrow();
+        Tweet tweet = this.tweetRepository.findById(id).orElseThrow();
         Optional<Retweet> retweet = this.retweetRepository.findByUserAndTweet(user, tweet);
 
         if(retweet.isPresent()){
