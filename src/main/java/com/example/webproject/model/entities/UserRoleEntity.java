@@ -16,8 +16,6 @@ public class UserRoleEntity{
     private UserRoleEnum role;
 
 
-
-
     public UserRoleEnum getRole() {
         return role;
     }

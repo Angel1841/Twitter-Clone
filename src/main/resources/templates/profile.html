@@ -101,12 +101,13 @@
 
                             <img class="background_img" src="https://cdn.pixabay.com/photo/2018/08/21/23/29/forest-3622519_1280.jpg" alt="background" />
 
-                            <img class="user_img" src="/images/havertz.jpg" alt="user img" />
+                            <img class="user_img" src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png" alt="user img" />
 
                             <span class="bg-secondary p-1 px-5 rounded text-white mt-2 mb-1" th:text="*{username}"></span>
 
                             <h3 class="mt-2 mb-1">Roles:</h3>
-                            <i class="mt-2 mb-1" th:each="role: *{roles}" th:text="${role.getRole().name()}"></i>
+
+                            <p class="mt-2 mb-1" th:each="role: *{roles}" th:text="${role.getRole().name()}"></p>
 
                             <h3 class="mt-2 mb-1">Email:</h3>
                             <span th:text="*{email}"></span>

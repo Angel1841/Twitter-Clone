@@ -30,10 +30,10 @@ public class UserProfileDTO {
     public UserProfileDTO(String username, String email, List<UserRoleEntity> roles, Set<Like> likes, Set<Tweet> tweets, Set<Retweet> retweets) {
         this.username = username;
         this.email = email;
-        this.likes = new HashSet<>();
-        this.tweets = new HashSet<>();
-        this.retweets = new HashSet<>();
-        this.roles = new ArrayList<>();
+        this.likes = likes;
+        this.tweets = tweets;
+        this.retweets = retweets;
+        this.roles = roles;
     }
 
     public String getUsername() {

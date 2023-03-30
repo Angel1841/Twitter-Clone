@@ -154,7 +154,7 @@
                     <a type="submit" th:href="@{/retweet-tweet/{id}(id = ${tweet.getId()})}" th:text="' ' + ${tweet.getRetweetCounter()}" class="button button-like fa fa-retweet" ></a>
 
 
-                    <a sec:authorize="hasRole('ROLE_ADMIN')" type="submit" th:href="@{/delete/{id}(id = ${tweet.getId()})}"  class="button button-like fa fa-trash" ></a>
+                    <a th:if="${isAdmin}" type="submit" th:href="@{/delete/{id}(id = ${tweet.getId()})}"  class="button button-like fa fa-trash" ></a>
 
 
 
