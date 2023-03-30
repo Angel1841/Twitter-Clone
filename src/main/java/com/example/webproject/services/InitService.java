@@ -26,6 +26,7 @@ public class InitService {
         this.passwordEncoder = passwordEncoder;
     }
 
+
     public void init() {
         initRoles();
         initAdmin();

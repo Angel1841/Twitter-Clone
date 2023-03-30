@@ -36,7 +36,7 @@ public class AuthController {
     }
 
     @ModelAttribute(name = "registrationDTO")
-    public UserRegistrationDTO initRegistrationDTO(){
+    public UserRegistrationDTO initRegistrationDTO() {
         return new UserRegistrationDTO();
     }
 
@@ -47,8 +47,8 @@ public class AuthController {
     //}
 
     @GetMapping("/register")
-    public String register(){
-        if(this.authService.isLogged()) {
+    public String register() {
+        if (this.authService.isLogged()) {
             return "redirect:/home";
         }
         return "/register";
@@ -75,8 +75,8 @@ public class AuthController {
 
 
     @GetMapping("/login")
-    public String login(){
-        if(this.authService.isLogged()) {
+    public String login() {
+        if (this.authService.isLogged()) {
             return "redirect:/home";
         }
         return "/login";
@@ -92,10 +92,6 @@ public class AuthController {
 
         return "redirect:/login";
     }
-
-
-
-
 
 
 }

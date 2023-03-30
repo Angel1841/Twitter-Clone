@@ -13,6 +13,7 @@ import com.example.webproject.repository.TweetRepository;
 import com.example.webproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,7 +75,7 @@ public class TweetService {
     @Transactional
     public void deleteTweet(Long id){
         Tweet tweet = this.tweetRepository.findById(id).orElseThrow();
-        this.tweetRepository.deleteById(tweet.getId());
+        this.tweetRepository.delete(tweet);
     }
 
     @Transactional

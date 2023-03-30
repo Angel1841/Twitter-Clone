@@ -2,6 +2,7 @@ package com.example.webproject.controller;
 
 import com.example.webproject.model.DTOS.UserProfileDTO;
 import com.example.webproject.model.entities.UserEntity;
+import com.example.webproject.model.enums.UserRoleEnum;
 import com.example.webproject.services.AuthService;
 import com.example.webproject.services.TweetService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,7 @@ public class HomeController {
         );
 
         model.addAttribute("user", userProfileDTO);
+        model.addAttribute("userRoles", UserRoleEnum.values());
 
         return "profile";
     }

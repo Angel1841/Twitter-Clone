@@ -6,6 +6,8 @@ import lombok.*;
 import java.text.DateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -29,6 +31,13 @@ public class Tweet{
     private Integer retweetCounter;
 
     private Integer likeCounter;
+
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Like> likes = new HashSet<>();
+
+    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Retweet> retweets = new HashSet<>();
+
 
     //@ManyToOne(fetch = FetchType.EAGER)
     //@JoinColumn(name = "tweet_id", referencedColumnName = "id")

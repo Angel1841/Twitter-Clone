@@ -25,13 +25,13 @@ public class UserEntity{
     private String email;
 
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Like> likes;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Tweet> tweets;
 
-    @OneToMany(mappedBy = "user", orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Set<Retweet> retweets;
 
     @ManyToMany(fetch = FetchType.EAGER)
@@ -54,6 +54,18 @@ public class UserEntity{
         this.tweets = new HashSet<>();
         this.retweets = new HashSet<>();
         this.roles = new ArrayList<>();
+    }
+
+    public boolean isAdmin(){
+        for (var role: this.roles){
+
+            String roleName = role.getRole().toString();
+
+            if(roleName.equals("ADMIN")){
+                return true;
+            }
+        }
+        return false;
     }
 
     public String getUsername() {

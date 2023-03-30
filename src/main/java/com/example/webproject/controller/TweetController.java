@@ -43,10 +43,10 @@ public class TweetController {
         return "redirect:/home";
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<HttpStatus> deleteTweet(@PathVariable(name = "id") Long id){
+    @RequestMapping("/delete/{id}")
+    public String deleteTweet(@PathVariable(name = "id") Long id){
         this.tweetService.deleteTweet(id);
-        return ResponseEntity.ok().build();
+        return "redirect:/home";
     }
 
     @GetMapping("/tweets-by-username/{username}")
