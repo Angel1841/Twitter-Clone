@@ -168,30 +168,19 @@ public class TweetService {
     }
 
     @Transactional
-    public List<TweetDTO> getRetweetsByUsername(String username) {
+    public List<LikeRetweetDTO> getRetweetsByUsername(String username) {
         UserEntity user = this.userRepository.findUserEntityByUsername(username).orElseThrow();
 
-        return this.retweetRepository.findAllByUser(user)
-                .orElseThrow().stream().map(m -> this.modelMapper.map(m, TweetDTO.class)).collect(Collectors.toList());
+        return this.retweetRepository.findAllByUser(user).orElseThrow().stream().map(m -> this.modelMapper.map(m, LikeRetweetDTO.class)).collect(Collectors.toList());
 
     }
 
     @Transactional
-    public List<TweetDTO> getLikedByUsername(String username) {
+    public List<LikeRetweetDTO> getLikedByUsername(String username) {
         UserEntity user = this.userRepository.findUserEntityByUsername(username).orElseThrow();
-        List<Like> likes = this.likeRepository.findAllByUser(user).orElseThrow();
 
-        return likes.stream().map(Like::getTweet).map(m -> this.modelMapper.map(m, TweetDTO.class)).collect(Collectors.toList());
+        return this.likeRepository.findAllByUser(user).orElseThrow().stream().map(m -> this.modelMapper.map(m, LikeRetweetDTO.class)).collect(Collectors.toList());
     }
 
-    @Transactional(readOnly = true)
-    public Boolean isRetweeted(LikeRetweetDTO likeRetweetDto, Principal principal) {
-        String username = principal.getName();
-        UserEntity user = authService.getUser(username);
-
-        Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
-
-        return this.retweetRepository.findByUserAndTweet(user, tweet).isPresent();
-    }
 
 }

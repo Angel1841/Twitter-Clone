@@ -83,7 +83,7 @@
 
 <div class="container justify-content-center mt-5 border-left border-right">
 
-<form th:each="like : ${user.getLikes()}" class="post" >
+<form th:each="like : ${likedByUser}" class="post" >
 
     <div class="post__avatar">
         <img
