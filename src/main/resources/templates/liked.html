@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Twitter Clone - Final</title>
+    <link rel="stylesheet" href="/css/styles.css"/>
+    <link rel="stylesheet" href="/css/likeAndRetweet.css"/>
+
+    <link rel="stylesheet" href="/css/likedTweets.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link
+            th:action="@{/liked}"
+            th:method="POST"
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+            integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+            crossorigin="anonymous"
+    />
+</head>
+
+<body>
+
+<!-- sidebar starts -->
+<div class="sidebar">
+
+    <i class="fab fa-twitter"></i>
+
+    <form method="GET" th:action="@{/home}" class="sidebarOption">
+
+        <button type="submit" value="home" class="material-icons" > home </button>
+        <h2>Home</h2>
+
+    </form>
+
+    <div class="sidebarOption">
+        <span class="material-icons"> search </span>
+        <h2>Explore</h2>
+    </div>
+
+    <th:block sec:authorize="isAuthenticated()">
+
+        <div class="sidebarOption">
+            <span class="material-icons"> mail_outline </span>
+            <h2>Retweets</h2>
+        </div>
+
+        <div class="sidebarOption sidebarOption active">
+            <span class="material-icons"> bookmark_border </span>
+            <h2>Liked posts</h2>
+        </div>
+
+        <form method="POST" th:action="@{/profile}"  class="sidebarOption">
+
+            <button type="submit" name="submit" value="value" class="material-icons" > perm_identity </button>
+            <h2>Profile</h2>
+
+        </form>
+
+        <!-- <div class="sidebarOption"> -->
+        <!--       <span class="material-icons"> more_horiz </span>  -->
+        <!--       <h2>More</h2> -->
+        <!-- </div> -->
+
+        <form method="POST" th:action="@{/logout}"  class="sidebarOption">
+
+            <button type="submit" name="submit" value="value" class="material-icons" > logout </button>
+            <h2>Logout</h2>
+
+        </form>
+
+        <!-- <button type="submit" name="submit" value="value" class="material-icons">Logout</button> -->
+
+        <button class="sidebar__tweet">Tweet</button>
+
+    </th:block>
+</div>
+
+
+<div class="container justify-content-center mt-5 border-left border-right">
+
+<form th:each="like : ${user.getLikes()}" class="post" >
+
+    <div class="post__avatar">
+        <img
+                src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
+                alt=""
+        />
+    </div>
+
+
+    <div class="post__body">
+        <div class="post__header">
+
+            <div class="post__headerText">
+                <span style="font-weight:bold" th:text="${like.getUser().getUsername()}"/>
+                <span class="post__headerSpecial">
+                                <span class="material-icons post__badge"> verified </span>@<span th:text="${like.getUser().getUsername()}"/></span>
+
+            </div>
+
+            <div class="post__headerDescription">
+                <p><span th:text="${like.getTweet().getText()}"/></p>
+
+                <a type="submit" th:href="@{/like-tweet/{id}(id = ${like.getTweet().getId()})}" class="button button-like fa fa-trash" ></a>
+
+            </div>
+
+        </div>
+
+        <!-- LIKE AND RETWEET -->
+
+        <div class="post__footer">
+
+
+            <!-- a type="submit" th:href="@{/like-tweet/{id}(id = ${tweet.getId()})}" th:text="' ' + ${tweet.getLikeCounter()}" class="button button-like fa fa-heart" ></a> -->
+
+
+        </div>
+
+    </div>
+
+</form>
+</div>
+
+</body>
+</html>

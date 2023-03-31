@@ -41,25 +41,17 @@
     </div>
 
     <th:block sec:authorize="isAuthenticated()">
-        <div class="sidebarOption">
-            <span class="material-icons"> notifications_none </span>
-            <h2>Notifications</h2>
-        </div>
 
         <div class="sidebarOption">
             <span class="material-icons"> mail_outline </span>
-            <h2>Tweets</h2>
+            <h2>Retweets</h2>
         </div>
 
-        <div class="sidebarOption">
-            <span class="material-icons"> bookmark_border </span>
+
+        <form th:action="@{/liked}" class="sidebarOption">
+            <button type="submit" value="value" class="material-icons"> bookmark_border </button>
             <h2>Liked posts</h2>
-        </div>
-
-        <div class="sidebarOption">
-            <span class="material-icons"> list_alt </span>
-            <h2>Lists</h2>
-        </div>
+        </form>
 
         <form method="POST" th:action="@{/profile}"  class="sidebarOption sidebarOption active">
 
