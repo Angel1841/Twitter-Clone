@@ -46,28 +46,6 @@ public class HomeController {
         return "/home";
     }
 
-    @PostMapping("/profile")
-    public String profile(Principal principal, Model model) {
 
-        String username = principal.getName();
-        UserEntity user = authService.getUser(username);
-
-        UserProfileDTO userProfileDTO = new UserProfileDTO(
-                username,
-                user.getEmail(),
-                user.getRoles(),
-                user.getLikes(),
-                user.getTweets(),
-                user.getRetweets()
-        );
-
-        model.addAttribute("user", userProfileDTO);
-
-        for (var role: userProfileDTO.getRoles()){
-            System.out.println(role.getRole().name());
-        }
-
-        return "profile";
-    }
 
 }

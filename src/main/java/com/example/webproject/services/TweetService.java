@@ -136,7 +136,6 @@ public class TweetService {
         return new ArrayList<>(this.tweetRepository.findAll());
     }
 
-
     @Transactional
     public TweetDTO getTweet(Long id) {
         return this.modelMapper.map(this.tweetRepository.findById(id).orElseThrow(), TweetDTO.class);

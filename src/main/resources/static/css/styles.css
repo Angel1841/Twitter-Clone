@@ -188,6 +188,15 @@ body {
   margin-top: 10px;
 }
 
+
+.date__time {
+  display: flex;
+  justify-content: flex-end;
+  bottom: 0;
+  right: 0;
+  margin-top: 10px;
+}
+
 .post__badge {
   font-size: 14px !important;
   color: var(--twitter-color);

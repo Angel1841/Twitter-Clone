@@ -7,7 +7,7 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Twitter Clone - Final</title>
+    <title>Witter</title>
     <link rel="stylesheet" href="/css/styles.css"/>
     <link rel="stylesheet" href="/css/likeAndRetweet.css"/>
 
@@ -144,7 +144,10 @@
 
                     <a th:if="${isAdmin}" type="submit" th:href="@{/delete/{id}(id = ${tweet.getId()})}"  class="button button-like fa fa-trash" ></a>
 
+
                 </div>
+
+
 
         </div>
     </form>
