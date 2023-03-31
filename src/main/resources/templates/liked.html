@@ -101,16 +101,24 @@
                 <span class="post__headerSpecial">
                                 <span class="material-icons post__badge"> verified </span>@<span th:text="${like.getUser().getUsername()}"/></span>
 
+
+
             </div>
 
             <div class="post__headerDescription">
                 <p><span th:text="${like.getTweet().getText()}"/></p>
 
-                <a type="submit" th:href="@{/like-tweet/{id}(id = ${like.getTweet().getId()})}" class="button button-like fa fa-trash" ></a>
+
+                <div class="removeLike__button">
+                    <a type="submit" th:href="@{/like-tweet/{id}(id = ${like.getTweet().getId()})}" class="button button-like fa fa-trash" ></a>
+                </div>
+
 
             </div>
 
         </div>
+
+
 
         <!-- LIKE AND RETWEET -->
 

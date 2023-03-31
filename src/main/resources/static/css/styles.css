@@ -177,6 +177,11 @@ body {
   border-radius: 20px;
 }
 
+.removeLike__button{
+  display: flex;
+  justify-content: right;
+}
+
 .post__footer {
   display: flex;
   justify-content: center;

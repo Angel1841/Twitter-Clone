@@ -135,9 +135,6 @@
 
                 <div class="post__footer">
 
-
-
-
                     <a type="submit" th:href="@{/like-tweet/{id}(id = ${tweet.getId()})}" th:text="' ' + ${tweet.getLikeCounter()}" class="button button-like fa fa-heart" ></a>
                             <!-- <i class="fa fa-heart"></i> -->
                             <!-- <a class="mb-1 align-text-bottom">Likes :<span th:text="${tweet.getLikeCounter()}"/></a> -->
@@ -146,8 +143,6 @@
 
 
                     <a th:if="${isAdmin}" type="submit" th:href="@{/delete/{id}(id = ${tweet.getId()})}"  class="button button-like fa fa-trash" ></a>
-
-
 
                 </div>
 
