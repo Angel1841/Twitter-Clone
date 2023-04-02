@@ -105,7 +105,7 @@
 
 
     <!-- post starts -->
-    <form th:each="tweet : ${Tweets}" class="post" >
+    <form th:each="tweet : ${Tweets}" th:each-sort="${tweet.getCreatedDate()}" class="post" >
 
 
 
@@ -124,10 +124,8 @@
 
             </div>
 
-
-
-
             <div class="post__body">
+
                 <div class="post__header">
 
                     <div class="post__headerText">
