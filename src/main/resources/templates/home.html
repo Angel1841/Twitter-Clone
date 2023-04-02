@@ -33,11 +33,6 @@
         <h2>Home</h2>
     </div>
 
-    <div class="sidebarOption">
-        <span class="material-icons"> search </span>
-        <h2>Explore</h2>
-    </div>
-
     <th:block sec:authorize="isAuthenticated()">
 
         <form th:action="@{/retweeted}" class="sidebarOption">
