@@ -40,10 +40,10 @@
 
     <th:block sec:authorize="isAuthenticated()">
 
-        <div class="sidebarOption">
-            <span class="material-icons"> mail_outline </span>
+        <form th:action="@{/retweeted}" class="sidebarOption">
+            <button type="submit" value="value" class="material-icons"> mail_outline </button>
             <h2>Retweets</h2>
-        </div>
+        </form>
 
         <form th:action="@{/liked}" class="sidebarOption">
             <button type="submit" value="value" class="material-icons"> bookmark_border </button>
@@ -108,11 +108,20 @@
     <form th:each="tweet : ${Tweets}" class="post" >
 
             <div class="post__avatar">
-                <img
-                        src="https://avatars.githubusercontent.com/u/96210464?v=4"
+
+                <img th:if="${currentUser.getUsername().equals(tweet.getUser().getUsername())}"
+                        src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
                         alt=""
                 />
+
+                <img th:unless="${currentUser.getUsername().equals(tweet.getUser().getUsername())}"
+                     src="https://3.bp.blogspot.com/-UI5bnoLTRAE/VuU18_s6bRI/AAAAAAAADGA/uafLtb4ICCEK8iO3NOh1C_Clh86GajUkw/s1600/guest.png"
+                     alt=""
+                />
+
             </div>
+
+
 
 
             <div class="post__body">

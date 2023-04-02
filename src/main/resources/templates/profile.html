@@ -50,10 +50,10 @@
 
     <th:block sec:authorize="isAuthenticated()">
 
-        <div class="sidebarOption">
-            <span class="material-icons"> mail_outline </span>
+        <form th:action="@{/retweeted}" class="sidebarOption">
+            <button type="submit" value="value" class="material-icons"> mail_outline </button>
             <h2>Retweets</h2>
-        </div>
+        </form>
 
 
         <form th:action="@{/liked}" class="sidebarOption">

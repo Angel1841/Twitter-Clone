@@ -36,8 +36,11 @@ public class HomeController {
 
         model.addAttribute("Tweets", tweetService.getAllTweets());
 
+
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
+
+        model.addAttribute("currentUser", user);
 
         boolean isAdmin = user.isAdmin();
 

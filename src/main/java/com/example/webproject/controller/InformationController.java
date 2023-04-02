@@ -42,6 +42,27 @@ public class InformationController {
         return "/liked";
     }
 
+    @GetMapping("/retweeted")
+    public String retweetedTweets(Model model, Principal principal){
+
+        String username = principal.getName();
+        UserEntity user = authService.getUser(username);
+
+        UserProfileDTO userProfileDTO = new UserProfileDTO(
+                username,
+                user.getEmail(),
+                user.getRoles(),
+                user.getLikes(),
+                user.getTweets(),
+                user.getRetweets()
+        );
+
+        model.addAttribute("user", userProfileDTO);
+        model.addAttribute("retweetedByUser", tweetService.getRetweetsByUsername(user.getUsername()));
+
+        return "/retweeted";
+    }
+
     //@GetMapping("/retweets-by-username/{username}")
     //public List<LikeRetweetDTO> getRetweetsByUsername(@PathVariable(name = "username") String username){
     //    return this.tweetService.getRetweetsByUsername(username);
