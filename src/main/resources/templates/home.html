@@ -107,7 +107,10 @@
     <!-- post starts -->
     <form th:each="tweet : ${Tweets}" class="post" >
 
+
+
             <div class="post__avatar">
+
 
                 <img th:if="${currentUser.getUsername().equals(tweet.getUser().getUsername())}"
                         src="https://i.pinimg.com/originals/a6/58/32/a65832155622ac173337874f02b218fb.png"
@@ -153,12 +156,17 @@
 
                     <a th:if="${isAdmin}" type="submit" th:href="@{/delete/{id}(id = ${tweet.getId()})}"  class="button button-like fa fa-trash" ></a>
 
-
                 </div>
 
-
+                <div th:unless="${tweet.getRetweetCounter() == 0}" th:each="retweet : ${tweet.getRetweets()}" class="small-gray-text post__retweets">
+                    <i th:text="'Retweeted by: ' + ${retweet.getUser().getUsername()}"></i>
+                    <br>
+                </div>
 
         </div>
+
+
+
     </form>
 
     <!-- post ends -->

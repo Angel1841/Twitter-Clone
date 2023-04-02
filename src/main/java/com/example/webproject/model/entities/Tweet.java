@@ -35,7 +35,7 @@ public class Tweet{
     @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Like> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "tweet", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tweet", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Retweet> retweets = new HashSet<>();
 
 
@@ -44,7 +44,6 @@ public class Tweet{
     //private Tweet tweet;
 
     private Date createdDate;
-
 
 
 }

@@ -169,6 +169,7 @@ body {
   align-items: flex-start;
   border-bottom: 1px solid var(--twitter-background);
   padding-bottom: 10px;
+
 }
 
 .post__body img {
@@ -183,6 +184,12 @@ body {
 }
 
 .post__footer {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.post__retweets {
   display: flex;
   justify-content: center;
   margin-top: 10px;
@@ -223,6 +230,13 @@ body {
 .post__body {
   flex: 1;
   padding: 10px;
+}
+
+.small-gray-text {
+  display: block;
+  justify-content: right;
+  font-size: 14px;
+  color: #777777;
 }
 
 .post__avatar {

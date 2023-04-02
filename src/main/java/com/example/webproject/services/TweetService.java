@@ -150,6 +150,15 @@ public class TweetService {
         return this.likeRepository.findByUserAndTweet(user, tweet).isPresent();
     }
 
+    @Transactional(readOnly = true)
+    public Boolean isRetweeted(LikeRetweetDTO likeRetweetDto, Principal principal) {
+        String username = principal.getName();
+        UserEntity user = authService.getUser(username);
+
+        Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
+        return this.retweetRepository.findByUserAndTweet(user, tweet).isPresent();
+    }
+
     @Transactional
     public List<TweetDTO> getAll() {
 

@@ -14,4 +14,6 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "retweets")
 @AllArgsConstructor
 public class Retweet extends BaseSingleAction{
+
+
 }
