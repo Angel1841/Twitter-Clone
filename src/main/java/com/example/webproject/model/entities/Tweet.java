@@ -38,13 +38,11 @@ public class Tweet{
     @OneToMany(mappedBy = "tweet", orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Retweet> retweets = new HashSet<>();
 
-
     //@ManyToOne(fetch = FetchType.EAGER)
     //@JoinColumn(name = "tweet_id", referencedColumnName = "id")
     //private Tweet tweet;
 
     private Date createdDate;
-
 
 }
 

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.security.Principal;
 import java.text.DateFormat;
 import java.time.Instant;
@@ -43,6 +44,7 @@ public class TweetService {
 
     @Transactional
     public void tweet(String tweetText, Principal principal) {
+
         String username = principal.getName();
         UserEntity user = authService.getUser(username);
 
