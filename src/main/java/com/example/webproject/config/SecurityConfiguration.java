@@ -52,8 +52,10 @@ public class SecurityConfiguration {
                 invalidateHttpSession(true).
                 and().
                 securityContext().
-                securityContextRepository(securityContextRepository).and().
-                exceptionHandling().accessDeniedPage("/unauthorized");
+                securityContextRepository(securityContextRepository).
+                and().
+                exceptionHandling().
+                accessDeniedPage("/forbidden");
 
         return http.build();
     }
