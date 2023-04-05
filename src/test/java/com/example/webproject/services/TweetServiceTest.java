@@ -179,6 +179,7 @@ public class TweetServiceTest {
         Mockito.verify(mockTweetRepository).save(tweetArgumentCaptor.capture());
 
         Assertions.assertEquals(1, toTest.getTweetsByUsername(testUserEntity.getUsername()).size());
+
     }
 
     @Test
