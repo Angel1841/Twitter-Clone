@@ -1,5 +1,6 @@
 package com.example.webproject.services;
 
+import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.entities.*;
 import com.example.webproject.model.enums.UserRoleEnum;
 import com.example.webproject.repository.LikeRepository;
@@ -10,17 +11,18 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
 
 import java.time.Instant;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.mockito.Mockito.*;
 
@@ -31,7 +33,16 @@ public class TweetServiceTest {
     @Mock
     private UserRepository mockUserRepository;
 
-    @Mock
+    @Captor
+    private ArgumentCaptor<UserEntity> userArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<Tweet> tweetArgumentCaptor;
+
+    @Captor
+    private ArgumentCaptor<Like> likeArgumentCaptor;
+
+    @InjectMocks
     private AuthService authService;
 
     @Mock
@@ -46,12 +57,18 @@ public class TweetServiceTest {
     @Mock
     private ModelMapper modelMapper;
 
+    @InjectMocks
     private TweetService toTest;
 
     @Mock
     private Principal principal;
 
     private UserEntity testUserEntity;
+
+    private Tweet testTweet;
+    private Like testLike;
+
+    private Retweet testRetweet;
 
 
     @BeforeEach
@@ -68,16 +85,6 @@ public class TweetServiceTest {
         UserRoleEntity testAdminRole = new UserRoleEntity().setRole(UserRoleEnum.ADMIN);
         UserRoleEntity testUserRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
 
-        tweets = new HashSet<>();
-
-        tweets.add(Tweet.builder()
-                .user(testUserEntity)
-                .text("hello")
-                .retweetCounter(0)
-                .likeCounter(0)
-                .createdDate(Date.from(Instant.now()))
-                .build());
-
         testUserEntity = new UserEntity().
                 setId(1L).
                 setUsername("asdasd").
@@ -86,71 +93,112 @@ public class TweetServiceTest {
                 setRoles(List.of(testUserRole));
 
 
+        testTweet = Tweet.builder()
+                .id(1L)
+                .user(testUserEntity)
+                .text("hello")
+                .retweetCounter(0)
+                .likeCounter(0)
+                .createdDate(Date.from(Instant.now()))
+                .build();
+
+        testLike = Like.builder()
+                .id(1L)
+                .tweet(testTweet)
+                .user(testUserEntity)
+                .build();
+
+        testRetweet = Retweet.builder()
+                .id(1L)
+                .tweet(testTweet)
+                .user(testUserEntity)
+                .build();
 
     }
 
     @Test
     void createTweetTest() { //fix
 
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
+
+        when(this.mockUserRepository.findUserEntityByUsername("asdasd")).thenReturn(Optional.of(testUserEntity));
 
         toTest.tweet("hello", principal);
 
+        Mockito.verify(mockTweetRepository).save(tweetArgumentCaptor.capture());
 
-        Assertions.assertEquals(1, this.mockTweetRepository.findAllByUser(testUserEntity).stream().count());
+
+    }
+
+
+
+
+    @Test
+    void deleteTweet() {
+
+        when(this.mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        toTest.deleteTweet(testTweet.getId());
+
+        Mockito.verify(mockTweetRepository).delete(tweetArgumentCaptor.capture());
 
     }
 
     @Test
-    void getAllTweetsTest() {
+    void getRetweetsByUsername(){
 
-        this.mockTweetRepository.save(Tweet.builder()
-                .user(testUserEntity)
-                .text("text")
-                .retweetCounter(0)
-                .likeCounter(0)
-                .createdDate(Date.from(Instant.now()))
-                .build());
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
 
+        when(this.mockUserRepository.findUserEntityByUsername(testUserEntity.getUsername())).thenReturn(Optional.of(testUserEntity));
 
+        when(mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
 
-        Assertions.assertEquals(mockTweetRepository.findAll().size(), toTest.getAllTweets().size());
+        when(mockRetweetRepository.findByUserAndTweet(testUserEntity, testTweet)).thenReturn(Optional.of(testRetweet));
+
+        when(this.mockRetweetRepository.findAllByUser(testUserEntity)).thenReturn(Optional.of(Optional.of(testRetweet).stream().toList()));
+
+        when(this.mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        toTest.retweet(testTweet.getId(), principal);
+
+        Assertions.assertEquals(1, toTest.getRetweetsByUsername(testUserEntity.getUsername()).size());
 
     }
 
     @Test
-    void likeTweetTest() {
+    void getTweetsByUsernameTest() {
 
-        UserRoleEntity testAdminRole = new UserRoleEntity().setRole(UserRoleEnum.ADMIN);
-        UserRoleEntity testUserRole = new UserRoleEntity().setRole(UserRoleEnum.USER);
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
 
-        UserEntity testUserEntity = new UserEntity().
-                setId(1L).
-                setUsername("adminkata").
-                setEmail("admin@example.com").
-                setPassword("asdasd").
-                setRoles(List.of(testAdminRole, testUserRole));
+        when(this.mockUserRepository.findUserEntityByUsername("asdasd")).thenReturn(Optional.of(testUserEntity));
 
-        List<Tweet> tweets = new ArrayList<>();
+        when(this.mockTweetRepository.findAllByUser(testUserEntity)).thenReturn(Optional.of(Optional.of(testTweet).stream().toList()));;
 
-        tweets.add(0, Tweet.builder()
-                        .id(1L)
-                .user(testUserEntity)
-                .text("hello")
-                .retweetCounter(0)
-                .likeCounter(0)
-                .createdDate(Date.from(Instant.now()))
-                .build()
-        );
+        toTest.tweet("hello", principal);
 
-        Tweet tweet = tweets.get(0);
+        Mockito.verify(mockTweetRepository).save(tweetArgumentCaptor.capture());
 
-        toTest.like(tweet.getId(), principal);
-
-
-
+        Assertions.assertEquals(1, toTest.getTweetsByUsername(testUserEntity.getUsername()).size());
     }
 
+    @Test
+    void getLikedByUsernameTest(){
 
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
 
+        when(this.mockUserRepository.findUserEntityByUsername(testUserEntity.getUsername())).thenReturn(Optional.of(testUserEntity));
 
+        when(mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        when(mockLikeRepository.findByUserAndTweet(testUserEntity, testTweet)).thenReturn(Optional.of(testLike));
+
+        when(this.mockLikeRepository.findAllByUser(testUserEntity)).thenReturn(Optional.of(Optional.of(testLike).stream().toList()));
+
+        when(this.mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        toTest.like(testTweet.getId(), principal);
+
+        Assertions.assertEquals(1, toTest.getLikedByUsername(testUserEntity.getUsername()).size());
+
+    }
 }

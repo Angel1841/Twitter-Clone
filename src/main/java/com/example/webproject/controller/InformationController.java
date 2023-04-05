@@ -3,9 +3,11 @@ package com.example.webproject.controller;
 import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.DTOS.UserProfileDTO;
 import com.example.webproject.model.entities.UserEntity;
+import com.example.webproject.repository.UserRepository;
 import com.example.webproject.services.AuthService;
 import com.example.webproject.services.TweetService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +23,13 @@ public class InformationController {
 
     private final TweetService tweetService;
 
+    private final UserRepository userRepository;
+
     @GetMapping("/liked")
     public String likedTweets(Model model, Principal principal){
 
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         UserProfileDTO userProfileDTO = new UserProfileDTO(
                 username,
@@ -46,7 +50,7 @@ public class InformationController {
     public String retweetedTweets(Model model, Principal principal){
 
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         UserProfileDTO userProfileDTO = new UserProfileDTO(
                 username,
@@ -78,6 +82,11 @@ public class InformationController {
     public List<TweetDTO> getAll(){
 
         return this.tweetService.getAll();
+    }
+
+    public UserEntity getUser(String username) {
+        return userRepository.findUserEntityByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
     }
 
 

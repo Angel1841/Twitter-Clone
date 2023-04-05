@@ -14,6 +14,7 @@ import com.example.webproject.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,7 @@ public class TweetService {
     public void tweet(String tweetText, Principal principal) {
 
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         this.createTweet(user, tweetText);
 
@@ -84,7 +85,7 @@ public class TweetService {
     public void like(Long id, Principal principal) {
 
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         Tweet tweet = this.tweetRepository.findById(id).orElseThrow();
 
@@ -111,7 +112,7 @@ public class TweetService {
     @Transactional
     public void retweet(Long id, Principal principal) {
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         Tweet tweet = this.tweetRepository.findById(id).orElseThrow();
         Optional<Retweet> retweet = this.retweetRepository.findByUserAndTweet(user, tweet);
@@ -146,7 +147,7 @@ public class TweetService {
     @Transactional(readOnly = true)
     public Boolean isLiked(LikeRetweetDTO likeRetweetDto, Principal principal) {
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
         return this.likeRepository.findByUserAndTweet(user, tweet).isPresent();
@@ -155,7 +156,7 @@ public class TweetService {
     @Transactional(readOnly = true)
     public Boolean isRetweeted(LikeRetweetDTO likeRetweetDto, Principal principal) {
         String username = principal.getName();
-        UserEntity user = authService.getUser(username);
+        UserEntity user = getUser(username);
 
         Tweet tweet = this.tweetRepository.findById(likeRetweetDto.getTweetId()).orElseThrow();
         return this.retweetRepository.findByUserAndTweet(user, tweet).isPresent();
@@ -190,6 +191,11 @@ public class TweetService {
         UserEntity user = this.userRepository.findUserEntityByUsername(username).orElseThrow();
 
         return this.likeRepository.findAllByUser(user).orElseThrow().stream().map(m -> this.modelMapper.map(m, LikeRetweetDTO.class)).collect(Collectors.toList());
+    }
+
+    public UserEntity getUser(String username) {
+        return userRepository.findUserEntityByUsername(username)
+                .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
     }
 
 
