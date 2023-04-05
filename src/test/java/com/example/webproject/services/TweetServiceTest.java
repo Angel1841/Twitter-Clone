@@ -130,9 +130,6 @@ public class TweetServiceTest {
 
     }
 
-
-
-
     @Test
     void deleteTweet() {
 
@@ -202,4 +199,21 @@ public class TweetServiceTest {
         Assertions.assertEquals(1, toTest.getLikedByUsername(testUserEntity.getUsername()).size());
 
     }
+
+    @Test
+    void getAll(){
+
+        when(this.mockTweetRepository.findAll()).thenReturn(Optional.of(testTweet).stream().toList());
+
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
+
+        when(this.mockUserRepository.findUserEntityByUsername("asdasd")).thenReturn(Optional.of(testUserEntity));
+
+        toTest.tweet("hello", principal);
+
+        Mockito.verify(mockTweetRepository).save(tweetArgumentCaptor.capture());
+
+        Assertions.assertEquals(1, toTest.getAll().size());
+    }
+
 }
