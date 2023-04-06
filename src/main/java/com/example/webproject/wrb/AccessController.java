@@ -1,4 +1,4 @@
-package com.example.webproject.controller;
+package com.example.webproject.wrb;
 
 import com.example.webproject.model.NotFoundException;
 import org.springframework.stereotype.Controller;

@@ -1,5 +1,6 @@
 package com.example.webproject.services;
 
+import com.example.webproject.model.DTOS.LikeRetweetDTO;
 import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.entities.*;
 import com.example.webproject.model.enums.UserRoleEnum;
@@ -214,6 +215,30 @@ public class TweetServiceTest {
         Mockito.verify(mockTweetRepository).save(tweetArgumentCaptor.capture());
 
         Assertions.assertEquals(1, toTest.getAll().size());
+    }
+
+    @Test
+    void isLiked(){
+
+        when(this.principal.getName()).thenReturn(testUserEntity.getUsername());
+
+        when(this.mockUserRepository.findUserEntityByUsername(testUserEntity.getUsername())).thenReturn(Optional.of(testUserEntity));
+
+        when(mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        when(mockLikeRepository.findByUserAndTweet(testUserEntity, testTweet)).thenReturn(Optional.of(testLike));
+
+        when(this.mockTweetRepository.findById(testTweet.getId())).thenReturn(Optional.of(testTweet));
+
+        testLike.getTweet().setLikeCounter(1);
+
+        LikeRetweetDTO likeRetweetDTO =  new LikeRetweetDTO();
+
+        likeRetweetDTO.setTweet(testTweet);
+        likeRetweetDTO.setUser(testUserEntity);
+        likeRetweetDTO.setTweetId(testTweet.getId());
+
+        Assertions.assertTrue(toTest.isLiked(likeRetweetDTO, principal));
     }
 
 }

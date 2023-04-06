@@ -1,4 +1,4 @@
-package com.example.webproject.controller;
+package com.example.webproject.wrb;
 
 import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.DTOS.UserProfileDTO;

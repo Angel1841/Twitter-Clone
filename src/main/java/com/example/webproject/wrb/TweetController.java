@@ -1,15 +1,11 @@
-package com.example.webproject.controller;
+package com.example.webproject.wrb;
 
-import com.example.webproject.model.DTOS.TweetDTO;
-import com.example.webproject.model.entities.Like;
 import com.example.webproject.services.TweetService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
