@@ -1,58 +1,59 @@
-package com.example.webproject.wrb;
+package com.example.webproject.web;
 
-import com.example.webproject.model.DTOS.UserProfileDTO;
 import com.example.webproject.model.entities.UserEntity;
 import com.example.webproject.repository.UserRepository;
 import com.example.webproject.services.AuthService;
 import com.example.webproject.services.TweetService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 
 import java.security.Principal;
 
 @Controller
-public class ProfileController {
+public class HomeController {
 
     private final AuthService authService;
+
     private final TweetService tweetService;
 
     private final UserRepository userRepository;
 
-    public ProfileController(AuthService authService, TweetService tweetService, UserRepository userRepository) {
+    @Autowired
+    public HomeController(AuthService authService, TweetService tweetService, UserRepository userRepository) {
         this.authService = authService;
         this.tweetService = tweetService;
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/profile")
-    public String profile(Principal principal, Model model) {
+
+
+    @GetMapping("/home")
+    public String homePage(Model model, Principal principal){
+
+        model.addAttribute("Tweets", tweetService.getAllTweets());
+
 
         String username = principal.getName();
         UserEntity user = getUser(username);
 
-        UserProfileDTO userProfileDTO = new UserProfileDTO(
-                username,
-                user.getEmail(),
-                user.getRoles(),
-                user.getLikes(),
-                user.getTweets(),
-                user.getRetweets()
-        );
+        model.addAttribute("currentUser", user);
 
-        model.addAttribute("user", userProfileDTO);
-        model.addAttribute("myTweets", tweetService.getTweetsByUsername(username));
+        boolean isAdmin = user.isAdmin();
 
-        for (var role: userProfileDTO.getRoles()){
-            System.out.println(role.getRole().name());
-        }
+        model.addAttribute("isAdmin", isAdmin);
 
-        return "profile";
+
+        return "/home";
     }
 
     public UserEntity getUser(String username) {
         return userRepository.findUserEntityByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException(username + " was not found!"));
     }
+
+
+
 }

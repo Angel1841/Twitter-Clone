@@ -1,4 +1,4 @@
-package com.example.webproject.wrb;
+package com.example.webproject.web;
 
 import com.example.webproject.model.DTOS.TweetDTO;
 import com.example.webproject.model.DTOS.UserProfileDTO;
