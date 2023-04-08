@@ -31,7 +31,7 @@ public class SecurityConfiguration {
                         requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll().
                         requestMatchers("/", "/login", "/register").anonymous().
                 // the URL-s below are available for all users - logged in and anonymous
-                        requestMatchers( "/home", "/login-error", "/profile", "/tweets/like-tweet/{id}", "/create", "/liked", "/retweeted").authenticated().
+                        requestMatchers( "/home", "/login-error", "/profile", "/tweets/like-tweet/{id}", "/create", "/liked", "/retweeted", "/retweet-tweet/{id}", "/delete/{id}").authenticated().
                 // only for admins
                         requestMatchers("/pages/admins").hasRole(UserRoleEnum.ADMIN.name()).
                 anyRequest().authenticated().
