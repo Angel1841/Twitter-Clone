@@ -1,19 +1,24 @@
 # Witter
 
-**Main idea**
+<h3>Main idea</h3>
 
 This web appllication is a Spring Boot social media app inspired by Twitter
 
 ---------------------------------------
 
-**Functionality**
-Users can create accounts(managed in UserService) which are saved into a MYSQL database
+<h3>Functionality</h3>
+
+Users can create accounts(managed in UserService) which are saved into a MYSQL database.
+
 Afterwards they can login/logout in and out of them.
 
 ![image](https://github.com/Angel1841/Witter/assets/96210464/bf685bb6-e6e1-40af-b604-b29d009f97d4)
 
+
 Every different user can write posts, like them and also retweet them.
-The posts will appear on the timeline. The user's name and avatar can be seen above the written post
+The posts will appear on the timeline. The user's name and avatar can be seen above the written post.
+
+
 
 ![image](https://github.com/Angel1841/Witter/assets/96210464/50968c93-cbd2-450a-87ca-84af96ca5fe8)
 
