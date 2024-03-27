@@ -1,6 +1,7 @@
 # Witter
 
 **Main idea**
+
 This web appllication is a Spring Boot social media app inspired by Twitter
 
 ---------------------------------------
